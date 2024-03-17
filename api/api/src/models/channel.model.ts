@@ -1,8 +1,9 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, hasMany} from '@loopback/repository';
 import { ObjectId } from 'mongoose';
+import { Item } from './item.model'
 
 @model()
-export class Item extends Entity {
+export class Channel extends Entity {
   @property({
     type: 'string',
     id: true,
@@ -21,18 +22,16 @@ export class Item extends Entity {
   })
   description?: string;
 
-  @property({
-    type: 'string',
-  })
-  channelId?: ObjectId;
+    @hasMany(() => Item)
+  item?: Item[];
 
-  constructor(data?: Partial<Item>) {
+  constructor(data?: Partial<Channel>) {
     super(data);
   }
 }
 
-export interface ItemRelations {
+export interface ChannelRelations {
   // describe navigational properties here
 }
 
-export type ItemWithRelations = Item & ItemRelations;
+export type ChannelWithRelations = Channel & ChannelRelations;
